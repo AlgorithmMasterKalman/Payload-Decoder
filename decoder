@@ -1,0 +1,250 @@
+/**
+ * Payload Decoder for Chirpstack and Milesight network server
+ *
+ * Copyright 2022 Milesight IoT
+ *
+ * @product AM300 Series
+ * @params
+ *     - fPort: 85
+ *     - bytes: [0x01, 0x75, 0x64]
+ */
+function Decode(fPort, bytes)
+{
+    var decoded = {};
+    var i = 0;
+    for (;;)
+    {
+        switch (bytes[i])
+        {
+        case 1:
+            i += 1;
+            decoded.EX = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 2:
+            i += 1;
+            decoded.H2S = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 3:
+            i += 1;
+            decoded.CO = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 4:
+            i += 1;
+            decoded.O2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 5:
+            i += 1;
+            decoded.SO2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 6:
+            i += 1;
+            decoded.CH4 = readUInt16LE(bytes.slice(i, i + 2)) / 100;
+            i += 2;
+            break;
+        case 7:
+            i += 1;
+            decoded.NO = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 8:
+            i += 1;
+            decoded.NO2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 9:
+            i += 1;
+            decoded.CL2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 10:
+            i += 1;
+            decoded.NH3 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 11:
+            i += 1;
+            decoded.H2 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 12:
+            i += 1;
+            decoded.HCN = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 13:
+            i += 1;
+            decoded.HCL = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 14:
+            i += 1;
+            decoded.PH3 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 15:
+            i += 1;
+            decoded.O3 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 16:
+            i += 1;
+            decoded.CLO2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 17:
+            i += 1;
+            decoded.CH2O = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 18:
+            i += 1;
+            decoded.C2H4O = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 19:
+            i += 1;
+            decoded.CO2 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 20:
+            i += 1;
+            decoded.VOC = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 21:
+            i += 1;
+            decoded.C6H6 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 22:
+            i += 1;
+            decoded.C7H8 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 23:
+            i += 1;
+            decoded.NOx = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 24:
+            i += 1;
+            decoded.Br2 = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 25:
+            i += 1;
+            decoded.HF = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 26:
+            i += 1;
+            decoded.CH3COOH = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 50: // 甲醛
+            i += 1;
+            decoded.F_CH2O = readUInt16LE(bytes.slice(i, i + 2)) / 1000;
+            i += 2;
+            break;
+        case 51: // 臭氧
+            i += 1;
+            decoded.F_O3 = readUInt16LE(bytes.slice(i, i + 2)) / 1000;
+            i += 2;
+            break;
+        case 52: // tvoc
+            i += 1;
+            decoded.F_TVOC = readUInt16LE(bytes.slice(i, i + 2)) / 1000;
+            i += 2;
+            break;
+        case 53: // 激光粉尘
+            i += 1;
+            decoded.F_PM1_0 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            decoded.F_PM2_5 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            decoded.F_PM10 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 54: // c02
+            i += 1;
+            decoded.F_CO2 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 55: // 噪声
+            i += 1;
+            decoded.NOISE = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 56: // 六氟化硫
+            i += 1;
+            decoded.F_SF6 = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 57: // 烟雾报警
+            i += 1;
+            decoded.SMOKE = bytes[i];
+            i += 1;
+            break;
+        case 80: // 温湿度
+            i += 1;
+            decoded.F_TEMP = readInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            decoded.F_HUMI = readUInt16LE(bytes.slice(i, i + 2)) / 10;
+            i += 2;
+            break;
+        case 81: // 光照
+            i += 1;
+            decoded.F_LIGHT = readInt32LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        case 82: // 大气压强
+            i += 1;
+            decoded.F_PRESS = readInt32LE(bytes.slice(i, i + 4));
+            i += 4;
+            break;
+        case 83: // 人体存在
+            i += 1;
+            decoded.F_HUMAN = bytes[i];
+            i += 1;
+            break;
+        case 84: // 电压
+            i += 1;
+            decoded.VOLT = readUInt16LE(bytes.slice(i, i + 2));
+            i += 2;
+            break;
+        default:
+            i += 1;
+            break;
+        }
+        if (i >= bytes.length)
+            break;
+    }
+
+    return decoded;
+}
+
+/* ******************************************
+ * bytes to number
+ ********************************************/
+function readUInt16LE(bytes)
+{
+    var value = (bytes[0] << 8) + bytes[1];
+    return value & 0xffff;
+}
+
+function readInt16LE(bytes)
+{
+    var ref = readUInt16LE(bytes);
+    return ref > 0x7fff ? ref - 0x10000 : ref;
+}
+
+function readUInt32LE(bytes)
+{
+    var value = (bytes[0] << 24) + (bytes[1] << 16) + (bytes[2] << 8) + bytes[3];
+    return value & 0xffffffff;
+}
